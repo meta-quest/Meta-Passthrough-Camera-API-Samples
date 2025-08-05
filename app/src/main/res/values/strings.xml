@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name" description="do not translate">Camera Demo</string>
+    <string name="button_description_start_camera" description="Content description for the start camera button to help screen readers and accessibility tools">Starts the camera preview</string>
 </resources>
