@@ -59,10 +59,15 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
           PermissionRequestState(
               nativeCameraPermissionGranted =
                   permissionManager.checkPermissions(
-                      application, PermissionManager.ANDROID_CAMERA_PERMISSION),
+                      application,
+                      PermissionManager.ANDROID_CAMERA_PERMISSION,
+                  ),
               vendorCameraPermissionGranted =
                   permissionManager.checkPermissions(
-                      application, PermissionManager.HZOS_CAMERA_PERMISSION)))
+                      application,
+                      PermissionManager.HZOS_CAMERA_PERMISSION,
+                  ),
+          ))
   val permissionRequestState: LiveData<PermissionRequestState> = _permissionRequestState
 
   private lateinit var imageReader: ImageReader
@@ -106,7 +111,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
               lensRotation = lensRotation ?: floatArrayOf(),
               lensTranslation = lensTranslation ?: floatArrayOf(),
               position = position,
-              isPassthrough = cameraSource == CAMERA_SOURCE_PASSTHROUGH))
+              isPassthrough = cameraSource == CAMERA_SOURCE_PASSTHROUGH,
+          ))
     }
 
     logConfigs(cameraConfigs)
@@ -156,11 +162,13 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
     val androidPermissionGranted =
         requestResult.getOrDefault(
             PermissionManager.ANDROID_CAMERA_PERMISSION,
-            _permissionRequestState.value?.nativeCameraPermissionGranted ?: false)
+            _permissionRequestState.value?.nativeCameraPermissionGranted ?: false,
+        )
     val vendorPermissionGranted =
         requestResult.getOrDefault(
             PermissionManager.HZOS_CAMERA_PERMISSION,
-            _permissionRequestState.value?.vendorCameraPermissionGranted ?: false)
+            _permissionRequestState.value?.vendorCameraPermissionGranted ?: false,
+        )
 
     val androidPermissionStateChanged =
         (androidPermissionGranted != _permissionRequestState.value?.nativeCameraPermissionGranted)
@@ -171,7 +179,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
       _permissionRequestState.value =
           _permissionRequestState.value?.copy(
               nativeCameraPermissionGranted = androidPermissionGranted,
-              vendorCameraPermissionGranted = vendorPermissionGranted)
+              vendorCameraPermissionGranted = vendorPermissionGranted,
+          )
     }
   }
 
@@ -197,7 +206,11 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
 
     imageReader =
         ImageReader.newInstance(
-            targetConfig.width, targetConfig.height, ImageFormat.YUV_420_888, IMAGE_BUFFER_SIZE)
+            targetConfig.width,
+            targetConfig.height,
+            ImageFormat.YUV_420_888,
+            IMAGE_BUFFER_SIZE,
+        )
     imageReader.onLatestImage(imageReaderHandler) { image -> processImage(image) }
 
     cameraManager.openCamera(
@@ -212,7 +225,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
                       SessionConfiguration.SESSION_REGULAR,
                       mutableListOf(
                           OutputConfiguration(imageReader.surface),
-                          OutputConfiguration(previewSurface)),
+                          OutputConfiguration(previewSurface),
+                      ),
                       cameraSessionExecutor,
                       object : CameraCaptureSession.StateCallback() {
                         override fun onConfigured(session: CameraCaptureSession) {
@@ -223,7 +237,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
                         override fun onConfigureFailed(session: CameraCaptureSession) {
                           loge("Failed to start camera session for camera ${targetConfig.id}")
                         }
-                      }))
+                      },
+                  ))
             } catch (err: Exception) {
               loge(err.message)
             }
@@ -254,7 +269,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
             throw err
           }
         },
-        cameraHandler)
+        cameraHandler,
+    )
   }
 
   // TODO replace with coroutines
@@ -313,5 +329,6 @@ private fun ImageReader.onLatestImage(handler: Handler? = null, listener: (Image
           image.close()
         }
       },
-      handler)
+      handler,
+  )
 }

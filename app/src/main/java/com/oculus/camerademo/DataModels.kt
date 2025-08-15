@@ -38,7 +38,7 @@ data class CameraConfig(
     val lensTranslation: FloatArray,
     val lensRotation: FloatArray,
     val isPassthrough: Boolean,
-    val position: Position
+    val position: Position,
 )
 
 data class CameraUiState(

@@ -72,7 +72,8 @@ class MainActivity : ComponentActivity() {
                 cameraState = uiState,
                 onStartCamera = { onStartCamera() },
                 onStopCamera = { onStopCamera() },
-                onExit = { onExit() })
+                onExit = { onExit() },
+            )
           }
         }
       }
@@ -138,7 +139,10 @@ class MainActivity : ComponentActivity() {
 
   private fun checkPermissions() {
     if (!permissionManager.checkPermissions(
-        this, Manifest.permission.CAMERA, PermissionManager.HZOS_CAMERA_PERMISSION)) {
+        this,
+        Manifest.permission.CAMERA,
+        PermissionManager.HZOS_CAMERA_PERMISSION,
+    )) {
       Toast.makeText(this, "Missing required permissions", Toast.LENGTH_SHORT).show()
       return
     }
@@ -154,7 +158,7 @@ class MainActivity : ComponentActivity() {
       cameraState: CameraUiState,
       onStartCamera: () -> Unit,
       onStopCamera: () -> Unit,
-      onExit: () -> Unit
+      onExit: () -> Unit,
   ) {
     Column(
         modifier = modifier,
@@ -163,16 +167,18 @@ class MainActivity : ComponentActivity() {
       Row(horizontalArrangement = Arrangement.SpaceBetween) {
         Button(
             onClick = onStartCamera,
-            contentDescription = stringResource(R.string.button_description_start_camera)) {
-              Text("Start camera")
-            }
+            contentDescription = stringResource(R.string.button_description_start_camera),
+        ) {
+          Text("Start camera")
+        }
 
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-              Text("Avg Brightness")
-              Text(cameraState.cameraBrightness.toString())
-            }
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+          Text("Avg Brightness")
+          Text(cameraState.cameraBrightness.toString())
+        }
       }
       Row(horizontalArrangement = Arrangement.SpaceEvenly) {
         Button(onClick = onStopCamera) { Text("Stop camera") }
@@ -190,7 +196,7 @@ class MainActivity : ComponentActivity() {
                       override fun onSurfaceTextureAvailable(
                           surface: SurfaceTexture,
                           width: Int,
-                          height: Int
+                          height: Int,
                       ) {
                         updatePreviewTexture(surface, width, height)
                       }
@@ -198,7 +204,7 @@ class MainActivity : ComponentActivity() {
                       override fun onSurfaceTextureSizeChanged(
                           surface: SurfaceTexture,
                           width: Int,
-                          height: Int
+                          height: Int,
                       ) {
                         updatePreviewTexture(surface, width, height)
                       }
@@ -210,7 +216,8 @@ class MainActivity : ComponentActivity() {
                       override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
                     }
               }
-            })
+            },
+        )
       }
     }
   }
