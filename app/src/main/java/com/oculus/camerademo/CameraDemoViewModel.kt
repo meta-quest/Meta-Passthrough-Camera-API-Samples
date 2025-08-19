@@ -67,7 +67,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
                       application,
                       PermissionManager.HZOS_CAMERA_PERMISSION,
                   ),
-          ))
+          )
+      )
   val permissionRequestState: LiveData<PermissionRequestState> = _permissionRequestState
 
   private lateinit var imageReader: ImageReader
@@ -112,7 +113,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
               lensTranslation = lensTranslation ?: floatArrayOf(),
               position = position,
               isPassthrough = cameraSource == CAMERA_SOURCE_PASSTHROUGH,
-          ))
+          )
+      )
     }
 
     logConfigs(cameraConfigs)
@@ -238,7 +240,8 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
                           loge("Failed to start camera session for camera ${targetConfig.id}")
                         }
                       },
-                  ))
+                  )
+              )
             } catch (err: Exception) {
               loge(err.message)
             }

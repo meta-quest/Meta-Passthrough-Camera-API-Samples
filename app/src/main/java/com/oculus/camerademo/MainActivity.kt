@@ -138,11 +138,13 @@ class MainActivity : ComponentActivity() {
   }
 
   private fun checkPermissions() {
-    if (!permissionManager.checkPermissions(
-        this,
-        Manifest.permission.CAMERA,
-        PermissionManager.HZOS_CAMERA_PERMISSION,
-    )) {
+    if (
+        !permissionManager.checkPermissions(
+            this,
+            Manifest.permission.CAMERA,
+            PermissionManager.HZOS_CAMERA_PERMISSION,
+        )
+    ) {
       Toast.makeText(this, "Missing required permissions", Toast.LENGTH_SHORT).show()
       return
     }
