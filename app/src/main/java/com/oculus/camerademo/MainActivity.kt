@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.ViewModelProvider
 import com.oculus.camerademo.ui.theme.CameraDemoTheme
@@ -154,6 +155,7 @@ class MainActivity : ComponentActivity() {
       Row(horizontalArrangement = Arrangement.SpaceBetween) {
         Button(
             onClick = onStartCamera,
+            contentDescription = stringResource(R.string.button_description_start_camera),
         ) {
           Text("Start camera")
         }
@@ -167,10 +169,20 @@ class MainActivity : ComponentActivity() {
         }
       }
       Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-        Button(onClick = onStopCamera) { Text("Stop camera") }
+        Button(
+            onClick = onStopCamera,
+            contentDescription = stringResource(R.string.button_description_stop_camera),
+        ) {
+          Text("Stop camera")
+        }
       }
       Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-        Button(onClick = onExit) { Text("Exit") }
+        Button(
+            onClick = onExit,
+            contentDescription = stringResource(R.string.button_description_exit),
+        ) {
+          Text("Exit")
+        }
       }
       Row(horizontalArrangement = Arrangement.SpaceEvenly) {
         AndroidView(
