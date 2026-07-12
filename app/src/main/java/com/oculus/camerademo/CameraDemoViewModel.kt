@@ -54,21 +54,20 @@ class XrCameraDemoViewModel(application: Application) : AndroidViewModel(applica
   private var _uiState = MutableLiveData(CameraUiState())
   val uiState: LiveData<CameraUiState> = _uiState
 
-  private var _permissionRequestState =
-      MutableLiveData(
-          PermissionRequestState(
-              nativeCameraPermissionGranted =
-                  permissionManager.checkPermissions(
-                      application,
-                      PermissionManager.ANDROID_CAMERA_PERMISSION,
-                  ),
-              vendorCameraPermissionGranted =
-                  permissionManager.checkPermissions(
-                      application,
-                      PermissionManager.HZOS_CAMERA_PERMISSION,
-                  ),
-          )
+  private var _permissionRequestState = MutableLiveData(
+      PermissionRequestState(
+          nativeCameraPermissionGranted =
+              permissionManager.checkPermissions(
+                  application,
+                  PermissionManager.ANDROID_CAMERA_PERMISSION,
+              ),
+          vendorCameraPermissionGranted =
+              permissionManager.checkPermissions(
+                  application,
+                  PermissionManager.HZOS_CAMERA_PERMISSION,
+              ),
       )
+  )
   val permissionRequestState: LiveData<PermissionRequestState> = _permissionRequestState
 
   private lateinit var imageReader: ImageReader
